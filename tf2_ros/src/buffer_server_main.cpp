@@ -60,8 +60,11 @@ int main(int argc, char** argv)
   double buffer_size;
   nh.param("buffer_size", buffer_size, 120.0);
 
+  bool pub_frame_srv;
+  nh.param("publish_frame_service", pub_frame_srv, false);
+
   // WIM: this works fine:
-  tf2_ros::Buffer buffer_core(ros::Duration(buffer_size+0)); // WTF??
+  tf2_ros::Buffer buffer_core(ros::Duration(buffer_size+0), pub_frame_srv); // WTF??
   tf2_ros::TransformListener listener(buffer_core);
   tf2_ros::BufferServer buffer_server(buffer_core, "tf2_buffer_server", false);
   buffer_server.start();
